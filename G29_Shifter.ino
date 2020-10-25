@@ -18,8 +18,9 @@
 #include "UnoJoy.h"
 
 // Shifter analog axis thresholds
-#define XAXIS_LEFT_THRESH        400
-#define XAXIS_RIGHT_THRESH       500
+// Change these values if the gears aren't detected correctly
+#define XAXIS_LEFT_THRESH        300
+#define XAXIS_RIGHT_THRESH       700
 #define YAXIS_UP_THRESH          700
 #define YAXIS_DOWN_THRESH        300
 
@@ -85,15 +86,15 @@ dataForController_t readController() {
     }
   }
 
-  // Reset every button to 0
-  controllerData.squareOn = 0;    // Button 1
-  controllerData.crossOn = 0;     // Button 2
-  controllerData.circleOn = 0;    // Button 3
-  controllerData.triangleOn = 0;  // Button 4
-  controllerData.l1On = 0;        // Button 5
-  controllerData.r1On = 0;        // Button 6
-  controllerData.l2On = 0;        // Button 7 (reverse)
-  controllerData.r2On = 0;        // Button 8 (neutral)
+  // List of buttons used by the shifter
+  // controllerData.squareOn      Button 1
+  // controllerData.crossOn       Button 2
+  // controllerData.circleOn      Button 3
+  // controllerData.triangleOn    Button 4
+  // controllerData.l1On          Button 5
+  // controllerData.r1On          Button 6
+  // controllerData.l2On          Button 7 (reverse)
+  // controllerData.r2On          Button 8 (neutral)
 
   // Enable the right button based on gear
   switch (gear) {
