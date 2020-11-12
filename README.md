@@ -22,14 +22,30 @@ More details can be found in [this video by AMStudio](https://www.youtube.com/wa
 
 Download the [UnoJoy](https://github.com/AlanChatham/UnoJoy) library. Copy the `UnoJoy.h` file in the same directory as `G29_Shifter.ino `, and flash `G29_Shifter.ino` to your board using the Arduino IDE.
 
-Make sure to read UnoJoy's project page, which describes the steps to install the library and to program your Arduino. 
+Make sure to read UnoJoy's project page, which describes the steps to install the library and to program your Arduino.
 
 Just as a helpful reminder, here are the steps required to turn your Arduino into a gamepad:
 
-* Put your Arduino in [DFU mode](https://www.arduino.cc/en/Hacking/DFUProgramming8U2): Using a piece of wire or other small metal object,
-connect the 2 pins closest to the USB connector together.
-* Run UnoJoy's `TurnIntoAJoystick` (`.bat` for Windows, `.sh` for Linux, and `.command` for macOS).
-* Unplug and replug your Arduino.
+### DFU mode
+
+Put your Arduino in [DFU mode](https://www.arduino.cc/en/Hacking/DFUProgramming8U2): Using a piece of wire or other small metal object,
+connect the 2 pins closest to the USB connector together. You should hear a "beep" when the board enters DFU mode.
+
+DFU stands for "Device Firmware Update". This mode is used by UnoJoy to change your Arduino's firmware, and either make it act as a regular Arduino board or as a controller.
+
+### TurnIntoAJoystick / TurnIntoAnArduino
+
+Now that your board is in DFU mode, you can update the firmware.
+
+You simply need to run (by double clicking) UnoJoy's `TurnIntoAJoystick` (`.bat` for Windows, `.sh` for Linux, and `.command` for macOS).
+
+**Note:** To reprogram your board as an Arduino instead of a joystick, simply run `TurnIntoAnArduino` instead.
+
+This should open the shell and log information about the process. If it ends with `passed`, you're all good! If you see `failed`, your board probably wasn't in DFU mode. If you're sure that it was, head over to [UnoJoy's project page](https://github.com/AlanChatham/UnoJoy) for more information or to open an issue.
+
+### Restart the Arduino
+
+Simply unplug and replug your Arduino and you should be good to go!
 
 Once your Arduino is in "Joystick mode", you can no longer reprogram it using the IDE. To turn it back into an Arduino (and be able to reprogram it), the steps are identical, but you need to run `TurnIntoAnArduino` instead of `TurnIntoAJoystick`.
 
