@@ -20,7 +20,7 @@ More details can be found in [this video by AMStudio](https://www.youtube.com/wa
 
 ## Flashing
 
-Download the [UnoJoy](https://github.com/AlanChatham/UnoJoy) library. Copy the `UnoJoy.h` file in the same directory as `G29_Shifter.ino `, and flash `G29_Shifter.ino` to your board using the Arduino IDE.
+Download the [UnoJoy](https://github.com/AlanChatham/UnoJoy) library. Copy the `UnoJoy.h` file in the same directory as `G29_Shifter.ino`, and flash `G29_Shifter.ino` to your board using the Arduino IDE.
 
 Make sure to read UnoJoy's project page, which describes the steps to install the library and to program your Arduino.
 
