@@ -97,7 +97,7 @@ void updateControllerState() {
   }
 
   // Decide which gears register as button presses
-  int min_gear = (REGISTER_NEUTRAL == 0) ? 1 : 0
+  int min_gear = (REGISTER_NEUTRAL == 0) ? 1 : 0;
 
   // Release the previous button if necessary...
   if (previous_gear >= min_gear) {
