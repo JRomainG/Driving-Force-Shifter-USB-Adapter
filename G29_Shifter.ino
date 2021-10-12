@@ -15,7 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "UnoJoy.h"
+#include "Joystick.h"
+
+Joystick_ Joystick;
 
 // Shifter analog axis thresholds
 // Change these values if the gears aren't detected correctly
@@ -39,6 +41,9 @@
 // Delay after each loop reading the input (in ms)
 const int ControllerUpdateRate = 50;
 
+// Joystick button pressed during the last update (if any)
+int previous_gear = -1;
+
 void setup() {
   // Shifter analog input pins (make sure they are correctly plugged in Arduino)
   pinMode(A0, INPUT_PULLUP);   // X axis
@@ -46,22 +51,22 @@ void setup() {
   pinMode(2, INPUT);           // Reverse button
 
   // Initialize Joystick Library
-  setupUnoJoy();
+  Joystick.begin();
 }
 
 void loop() {
-  setControllerData(readController());
+  updateControllerState();
   delay(ControllerUpdateRate);
 }
 
-dataForController_t readController() {
-  dataForController_t controllerData = getBlankDataForController();
+void updateControllerState() {
   int x = analogRead(0);                // X axis
   int y = analogRead(2);                // Y axis
   int is_reverse = digitalRead(2);      // Reverse button
 
   // Find out which gear the user is now in
   int gear = GEAR_NEUTRAL;
+
   if (x < XAXIS_LEFT_THRESH) {
     if (y > YAXIS_UP_THRESH) {
       gear = GEAR_1;
@@ -86,50 +91,23 @@ dataForController_t readController() {
     }
   }
 
-  // List of buttons used by the shifter
-  // controllerData.squareOn      Button 1
-  // controllerData.crossOn       Button 2
-  // controllerData.circleOn      Button 3
-  // controllerData.triangleOn    Button 4
-  // controllerData.l1On          Button 5
-  // controllerData.r1On          Button 6
-  // controllerData.l2On          Button 7 (reverse)
-  // controllerData.r2On          Button 8 (neutral)
-
-  // Enable the right button based on gear
-  switch (gear) {
-    case GEAR_1: {
-        controllerData.squareOn = 1;
-        break;
-      }
-    case GEAR_2: {
-        controllerData.crossOn = 1;
-        break;
-      }
-    case GEAR_3: {
-        controllerData.circleOn = 1;
-        break;
-      }
-    case GEAR_4: {
-        controllerData.triangleOn = 1;
-        break;
-      }
-    case GEAR_5: {
-        controllerData.l1On = 1;
-        break;
-      }
-    case GEAR_6: {
-        controllerData.r1On = 1;
-        break;
-      }
-    case GEAR_REVERSE: {
-        controllerData.l2On = 1;
-        break;
-      }
-    case GEAR_NEUTRAL: {
-        controllerData.r2On = REGISTER_NEUTRAL; 
-        break;
-      }
+  // Don't send unnecessary button events
+  if (previous_gear == gear) {
+    return;
   }
-  return controllerData;
+
+  // Decide which gears register as button presses
+  int min_gear = (REGISTER_NEUTRAL == 0) ? 1 : 0
+
+  // Release the previous button if necessary...
+  if (previous_gear >= min_gear) {
+    Joystick.releaseButton(previous_gear);
+  }
+
+  // And press the new one
+  if (gear >= min_gear) {
+    Joystick.pressButton(gear);
+  }
+
+  previous_gear = gear;
 }
