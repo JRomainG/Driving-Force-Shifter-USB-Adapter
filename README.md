@@ -4,6 +4,8 @@ Project to turn an Arduino board into a USB adapter for the Logitech G29 Driving
 
 Inspired by [this project](https://github.com/armandoiglesias/g29Shifter) and [this video](https://www.youtube.com/watch?v=dLpWEu8kCec). Code rewritten to use the [UnoJoy](https://github.com/AlanChatham/UnoJoy) library and work on a non-Leonardo board.
 
+**Note:** If you are having trouble with the UnoJoy library, check out [this branch](https://github.com/JRomainG/Driving-Force-Shifter-USB-Adapter/tree/ArduinoJoystickLibrary) which uses the [ArduinoJoystickLibrary](https://github.com/MHeironimus/ArduinoJoystickLibrary) library instead as well as [this issue](https://github.com/JRomainG/Driving-Force-Shifter-USB-Adapter/issues/1)
+
 ## Prerequisites
 
 * A [Logitech Driving Force shifter](https://www.logitechg.com/en-us/products/driving/driving-force-shifter.941-000119.html).
